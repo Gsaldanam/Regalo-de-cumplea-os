@@ -1,0 +1,56 @@
+{
+  "mensajeFinal": "Gracias por ser tú, por cada conversación inesperada y por todos los recuerdos que todavía nos faltan. Que este nuevo año te encuentre rodeada de cosas bonitas, gente que te quiera bien y muchas razones para sonreír. Feliz cumpleaños, Kayra.",
+  "cartas": [
+    {
+      "id": 1,
+      "titulo": "La pregunta importante",
+      "fecha": "Parada 01 · La evidencia",
+      "tipo": "votacion",
+      "texto": "Hay debates que merecen una respuesta seria, científica y completamente imparcial.",
+      "imagen": ""
+    },
+    {
+      "id": 2,
+      "titulo": "Una visita a la casita del terror",
+      "fecha": "Parada 02 · El susto",
+      "tipo": "screamer",
+      "texto": "Recuerdo aquella casita del terror y la valiente estrategia de fingir que todo estaba bajo control. Spoiler: no lo estaba.",
+      "imagen": ""
+    },
+    {
+      "id": 3,
+      "titulo": "Supuestamente fue casualidad",
+      "fecha": "Parada 03 · Parque Kennedy",
+      "tipo": "normal",
+      "texto": "A veces la casualidad se esfuerza demasiado en parecer casualidad. Como aquella reunión supuestamente espontánea en el parque Kennedy, con sus coincidencias sospechosamente perfectas y esa conversación que se alargó mucho más de lo planeado. Me gusta pensar que el universo solo estaba haciendo un pequeño favor.",
+      "imagen": ""
+    },
+    {
+      "id": 4,
+      "titulo": "Sal, sol y planes improvisados",
+      "fecha": "Parada 04 · La playa",
+      "tipo": "normal",
+      "_comentario": "EDITA AQUÍ: reemplaza texto, titulo, fecha e imagen por tu recuerdo de la playa.",
+      "texto": "[EDITA AQUÍ] Escribe el recuerdo de la playa: una escena, una frase que se quedó contigo y ese detalle que solo ustedes dos entienden. Puedes reemplazar todo este párrafo libremente.",
+      "imagen": ""
+    },
+    {
+      "id": 5,
+      "titulo": "Una película y mil comentarios",
+      "fecha": "Parada 05 · El cine",
+      "tipo": "normal",
+      "_comentario": "EDITA AQUÍ: reemplaza texto, titulo, fecha e imagen por el recuerdo del cine y la conversación sobre el futuro.",
+      "texto": "[EDITA AQUÍ] Cuenta el recuerdo del cine y de aquella conversación sobre el futuro. Añade aquí una anécdota, una predicción imposible o una frase que quieras conservar para siempre.",
+      "imagen": ""
+    },
+    {
+      "id": 6,
+      "titulo": "Lo que todavía nos queda",
+      "fecha": "Parada 06 · Un recuerdo más",
+      "tipo": "normal",
+      "_comentario": "EDITA AQUÍ: reemplaza texto, titulo, fecha e imagen por un recuerdo personal más.",
+      "texto": "[EDITA AQUÍ] Este espacio es para un recuerdo personal más. Puede ser pequeño: una caminata, una llamada, una risa inesperada o cualquier momento que merezca su propia página.",
+      "imagen": ""
+    }
+  ]
+}

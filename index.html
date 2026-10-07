@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff6ed">
+  <meta name="description" content="Un pequeño viaje de cumpleaños hecho con cariño.">
+  <title>Feliz cumpleaños, Kayra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+  <main>
+    <section class="hero" id="inicio" aria-labelledby="heroTitle">
+      <div class="hero__glow hero__glow--one"></div>
+      <div class="hero__glow hero__glow--two"></div>
+      <p class="eyebrow">Un paseo por nuestros recuerdos</p>
+      <h1 id="heroTitle">¡Feliz cumpleaños, <span>Kayra</span>!</h1>
+      <p class="hero__intro">Preparé seis pequeñas paradas. Abre cada sobre en orden y deja que la historia haga lo suyo.</p>
+      <button class="button button--primary" id="startButton" type="button">
+        Empezar <span aria-hidden="true">↓</span>
+      </button>
+      <p class="hero__hint">Hecho con cariño, paciencia y un poquito de drama</p>
+    </section>
+
+    <section class="journey" id="sobres" aria-labelledby="journeyTitle">
+      <div class="section-heading">
+        <p class="eyebrow">Capítulo a capítulo</p>
+        <h2 id="journeyTitle">Seis sobres, una historia</h2>
+        <p>El camino se irá dibujando a medida que avances.</p>
+      </div>
+
+      <div class="journey-map" id="journeyMap">
+        <svg class="path-line" viewBox="0 0 1000 1280" preserveAspectRatio="none" aria-hidden="true">
+          <path class="path-line__base" d="M250 100 C750 100 750 310 250 310 S250 520 750 520 S750 730 250 730 S250 940 750 940 S750 1150 500 1150"></path>
+          <path class="path-line__progress" id="pathProgress" d="M250 100 C750 100 750 310 250 310 S250 520 750 520 S750 730 250 730 S250 940 750 940 S750 1150 500 1150"></path>
+        </svg>
+        <div class="envelopes" id="envelopes" aria-live="polite"></div>
+      </div>
+
+      <div class="progress-note"><span id="progressCount">1</span> de 6 recuerdos disponibles</div>
+    </section>
+  </main>
+
+  <dialog class="letter-dialog" id="letterDialog" aria-labelledby="letterTitle">
+    <div class="letter-dialog__paper">
+      <button class="icon-button letter-dialog__close" id="closeLetter" type="button" aria-label="Cerrar carta">×</button>
+      <div class="letter-dialog__topline"><span id="letterDate"></span><span id="letterNumber"></span></div>
+      <h2 id="letterTitle"></h2>
+      <div class="letter-dialog__content" id="letterContent"></div>
+    </div>
+    <div class="screamer" id="screamer" role="button" tabindex="0" aria-label="Cerrar susto" aria-hidden="true">
+      <div class="screamer__flash"></div>
+      <div class="screamer__face">¡BU!</div>
+      <p>La casita del terror todavía tenía una sorpresa.</p>
+    </div>
+  </dialog>
+
+  <dialog class="final-dialog" id="finalDialog" aria-labelledby="finalTitle">
+    <div class="final-dialog__content">
+      <p class="eyebrow">Fin del recorrido</p>
+      <h2 id="finalTitle">Y esto apenas comienza</h2>
+      <p id="finalMessage"></p>
+      <button class="button button--primary" id="closeFinal" type="button">Guardar este momento</button>
+    </div>
+  </dialog>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
