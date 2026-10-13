@@ -121,5 +121,29 @@ h1 span { display: block; color: var(--coral); font-family: var(--script); font-
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
 @media (min-width: 700px) { .journey { padding-inline: 3rem; } .envelope-card { width: 285px; } }
 @media (max-width: 999px) { .hero__postcards { top: 57%; width: min(100% - 2rem, 700px); } .postcard { width: min(155px, 22vw); } }
-@media (max-width: 599px) { .hero__postcards { top: 48%; width: min(100% - 2rem, 340px); align-items: flex-end; } .postcard { width: min(115px, 29vw); } .postcard--photo { transform: rotate(-6deg) translateY(2rem); } .postcard--empty { transform: rotate(5deg) translateY(2rem); } .postcard figcaption { font-size: .92rem; } }
-@media (max-width: 599px) { .path-line { left: 14%; width: 72%; } .path-line__base, .path-line__progress { stroke-width: 3; } .envelope-card, .envelope-card:nth-child(even), .envelope-card:nth-child(odd) { left: 50%; right: auto; width: min(290px, 82vw); } .envelope-card:nth-child(odd) { transform: translateX(-50%) rotate(-5deg); } .envelope-card:nth-child(even) { transform: translateX(-50%) rotate(5deg) scaleX(-1); } .envelope-card:not(.is-locked):hover { transform: translateX(-50%) translateY(-7px) rotate(-5deg); } .envelope-card:nth-child(even):not(.is-locked):hover { transform: translateX(-50%) translateY(-7px) rotate(5deg) scaleX(-1); } .envelope-card:nth-child(1) { top: 1%; } .envelope-card:nth-child(2) { top: 18%; } .envelope-card:nth-child(3) { top: 35%; } .envelope-card:nth-child(4) { top: 52%; } .envelope-card:nth-child(5) { top: 69%; } .envelope-card:nth-child(6) { top: 86%; } }
+@media (max-width: 599px) {
+  .hero { min-height: 100svh; padding: 3rem 1rem 5rem; }
+  h1 { max-width: 22rem; margin-top: 0; font-size: clamp(2.7rem, 14vw, 4.5rem); line-height: .9; }
+  .hero__postcards { top: 73%; width: calc(100% - 1.5rem); align-items: flex-start; }
+  .postcard { width: min(88px, 23vw); }
+  .postcard--photo { transform: rotate(-6deg) translateY(1rem); }
+  .postcard--empty { transform: rotate(5deg) translateY(1rem); }
+  .postcard figcaption { font-size: .8rem; }
+  .hero__intro { max-width: 21rem; margin-bottom: 1.5rem; font-size: .9rem; }
+  .hero__hint { max-width: 18rem; margin: 1.2rem auto 0; line-height: 1.4; }
+  .journey { padding: 2rem .75rem 6rem; }
+  .journey-map, .envelopes { min-height: 1180px; }
+  .path-line { left: 8%; width: 84%; }
+  .path-line__base, .path-line__progress { stroke-width: 3; }
+  .envelope-card, .envelope-card:nth-child(even), .envelope-card:nth-child(odd) { left: 50%; right: auto; width: min(190px, 58vw); }
+  .envelope-card:nth-child(odd) { transform: translateX(-50%) rotate(-5deg); }
+  .envelope-card:nth-child(even) { transform: translateX(-50%) rotate(5deg) scaleX(-1); }
+  .envelope-card:not(.is-locked):hover { transform: translateX(-50%) translateY(-7px) rotate(-5deg); }
+  .envelope-card:nth-child(even):not(.is-locked):hover { transform: translateX(-50%) translateY(-7px) rotate(5deg) scaleX(-1); }
+  .envelope-card:nth-child(1) { top: 1%; }
+  .envelope-card:nth-child(2) { top: 18%; }
+  .envelope-card:nth-child(3) { top: 35%; }
+  .envelope-card:nth-child(4) { top: 52%; }
+  .envelope-card:nth-child(5) { top: 69%; }
+  .envelope-card:nth-child(6) { top: 86%; }
+}

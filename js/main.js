@@ -27,7 +27,6 @@ const elements = {
   finalMessage: document.querySelector("#finalMessage"),
   screamer: document.querySelector("#screamer"),
   pathProgress: document.querySelector("#pathProgress"),
-  progressCount: document.querySelector("#progressCount"),
   confettiLayer: document.querySelector("#confettiLayer")
 };
 
@@ -84,7 +83,6 @@ function renderEnvelopes() {
 
 function updateProgress() {
   const highestUnlocked = Math.max(...desbloqueadas);
-  elements.progressCount.textContent = highestUnlocked;
   const pathLength = elements.pathProgress.getTotalLength ? elements.pathProgress.getTotalLength() : 2000;
   const ratio = (highestUnlocked - 1) / (totalCartas - 1);
   elements.pathProgress.style.strokeDasharray = pathLength;
