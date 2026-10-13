@@ -4,7 +4,12 @@ let cartas = [];
 let desbloqueadas = getUnlockedLetters();
 let activeLetterId = null;
 let soundEnabled = true;
-let screamerTimeout = null;
+let sequenceTimeouts = [];
+let heartbeatTimer = null;
+let heartbeatCount = 0;
+let heartbeatInterval = 900;
+let audioContext = null;
+let toastTimer = null;
 const cartasDeRespaldo = [
   { id: 1, titulo: "La pregunta importante", fecha: "Parada 01 · La evidencia", tipo: "votacion", texto: "Hay debates que merecen una respuesta seria, científica y completamente imparcial.", imagen: "" },
   { id: 2, titulo: "Una visita a la casita del terror", fecha: "Parada 02 · El susto", tipo: "screamer", texto: "Recuerdo aquella casita del terror y la valiente estrategia de fingir que todo estaba bajo control. Spoiler: no lo estaba.", imagen: "" },
@@ -27,7 +32,10 @@ const elements = {
   finalMessage: document.querySelector("#finalMessage"),
   screamer: document.querySelector("#screamer"),
   pathProgress: document.querySelector("#pathProgress"),
-  confettiLayer: document.querySelector("#confettiLayer")
+  confettiLayer: document.querySelector("#confettiLayer"),
+  paper: document.querySelector(".letter-dialog__paper"),
+  sky: document.querySelector("#sky"),
+  toast: document.querySelector("#toast")
 };
 
 // El progreso se guarda como una lista de IDs para que recargar no cierre los sobres ya visitados.
@@ -47,7 +55,7 @@ function saveProgress() {
 
 async function loadLetters() {
   try {
-    const response = await fetch("data/cartas.json?v=2", { cache: "no-store" });
+    const response = await fetch("data/cartas.json?v=3", { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     cartas = data.cartas;
@@ -102,14 +110,18 @@ function openLetter(id) {
   else renderNormalLetter(carta);
 
   elements.letterDialog.showModal();
-  if (carta.tipo === "screamer") window.setTimeout(() => playScreamer(), 300);
+  if (carta.tipo === "screamer") {
+    schedule(() => startDarkSequence(), 500);
+  }
 }
 
 // Las cartas normales usan texto seguro; las cartas especiales construyen su interacción aparte.
 function renderNormalLetter(carta) {
   const paragraph = document.createElement("p");
+  paragraph.className = "typewriter";
   paragraph.textContent = carta.texto;
   elements.letterContent.append(paragraph);
+  typewrite(paragraph, carta.texto);
   if (carta.imagen) {
     const image = document.createElement("img");
     image.src = carta.imagen;
@@ -118,15 +130,35 @@ function renderNormalLetter(carta) {
     elements.letterContent.append(image);
   }
   if (carta.tipo === "screamer") {
-    const note = document.createElement("p");
-    note.className = "scream-note";
-    note.innerHTML = "Aviso: el susto puede ser intenso. <button class=\"mute-toggle\" type=\"button\">Silenciar susto</button>";
-    elements.letterContent.append(note);
-    note.querySelector(".mute-toggle").addEventListener("click", () => {
+    const toggle = document.createElement("button");
+    toggle.className = "mute-toggle";
+    toggle.type = "button";
+    toggle.textContent = "Silenciar susto";
+    toggle.setAttribute("aria-label", "Silenciar susto");
+    elements.letterContent.append(toggle);
+    toggle.addEventListener("click", () => {
       soundEnabled = !soundEnabled;
-      note.querySelector(".mute-toggle").textContent = soundEnabled ? "Silenciar susto" : "Activar sonido";
+      toggle.textContent = soundEnabled ? "Silenciar susto" : "Activar sonido";
     });
   }
+}
+
+function typewrite(element, text) {
+  element.textContent = "";
+  let index = 0;
+  const write = () => {
+    if (!element.isConnected) return;
+    element.textContent = text.slice(0, index);
+    if (index < text.length) {
+      index += 1;
+      schedule(write, 22);
+    }
+  };
+  write();
+  element.addEventListener("pointerdown", () => {
+    clearSequence();
+    element.textContent = text;
+  }, { once: true });
 }
 
 function renderVote(carta) {
@@ -158,6 +190,9 @@ function renderVote(carta) {
 
 function closeLetter() {
   if (!elements.letterDialog.open) return;
+  clearSequence();
+  closeScreamer();
+  elements.paper.classList.remove("paper--dark");
   elements.letterDialog.close();
   if (activeLetterId && activeLetterId < totalCartas && !desbloqueadas.includes(activeLetterId + 1)) {
     desbloqueadas.push(activeLetterId + 1);
@@ -167,9 +202,47 @@ function closeLetter() {
   }
   if (activeLetterId === totalCartas) {
     elements.finalDialog.showModal();
-    launchConfetti(80);
+    launchConfetti(120);
   }
   activeLetterId = null;
+}
+
+function startDarkSequence() {
+  if (!elements.letterDialog.open || cartas.find((item) => item.id === activeLetterId)?.tipo !== "screamer") return;
+  elements.paper.classList.add("paper--dark");
+  heartbeatCount = 0;
+  heartbeatInterval = 900;
+  heartbeat();
+}
+
+function heartbeat() {
+  if (!elements.letterDialog.open || !elements.paper.classList.contains("paper--dark")) return;
+  heartbeatCount += 1;
+  if (soundEnabled) playHeartbeat();
+  if (heartbeatCount >= 9) {
+    schedule(playScreamer, 180);
+    return;
+  }
+  heartbeatInterval = Math.max(380, heartbeatInterval - 70);
+  heartbeatTimer = window.setTimeout(heartbeat, heartbeatInterval);
+}
+
+function playHeartbeat() {
+  const context = getAudioContext();
+  if (!context) return;
+  const now = context.currentTime;
+  [0, .16].forEach((offset) => {
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.type = "sine";
+    oscillator.frequency.value = 55;
+    const volume = Math.min(.6, .15 * (1.18 ** Math.max(0, heartbeatCount - 1)));
+    gain.gain.setValueAtTime(volume, now + offset);
+    gain.gain.exponentialRampToValueAtTime(.001, now + offset + .12);
+    oscillator.connect(gain).connect(context.destination);
+    oscillator.start(now + offset);
+    oscillator.stop(now + offset + .13);
+  });
 }
 
 function playScreamer() {
@@ -177,35 +250,66 @@ function playScreamer() {
   elements.screamer.classList.add("is-active");
   elements.screamer.setAttribute("aria-hidden", "false");
   if (soundEnabled) playTone();
-  screamerTimeout = window.setTimeout(closeScreamer, 1300);
+  if (navigator.vibrate) navigator.vibrate([200, 60, 200]);
+  schedule(closeScreamer, 1400);
 }
 
 function closeScreamer() {
-  if (screamerTimeout) window.clearTimeout(screamerTimeout);
-  screamerTimeout = null;
+  const wasActive = elements.screamer.classList.contains("is-active");
   elements.screamer.classList.remove("is-active");
   elements.screamer.setAttribute("aria-hidden", "true");
+  elements.paper.classList.remove("paper--dark");
+  if (wasActive) showToast("Respira. Ya pasó. 😅");
 }
 
 // El sonido se genera con Web Audio para no depender de una librería o un archivo externo.
-function playTone() {
+function getAudioContext() {
   const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContext) return;
-  const context = new AudioContext();
+  if (!AudioContext) return null;
+  if (!audioContext) audioContext = new AudioContext();
+  if (audioContext.state === "suspended") audioContext.resume();
+  return audioContext;
+}
+
+function playTone() {
+  const context = getAudioContext();
+  if (!context) return;
   const oscillator = context.createOscillator();
   const gain = context.createGain();
   oscillator.type = "sawtooth";
-  oscillator.frequency.setValueAtTime(180, context.currentTime);
-  oscillator.frequency.exponentialRampToValueAtTime(60, context.currentTime + .35);
-  gain.gain.setValueAtTime(.08, context.currentTime);
-  gain.gain.exponentialRampToValueAtTime(.001, context.currentTime + .4);
+  oscillator.frequency.setValueAtTime(320, context.currentTime);
+  oscillator.frequency.exponentialRampToValueAtTime(50, context.currentTime + .6);
+  gain.gain.setValueAtTime(.14, context.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.001, context.currentTime + .6);
   oscillator.connect(gain).connect(context.destination);
   oscillator.start();
-  oscillator.stop(context.currentTime + .4);
+  oscillator.stop(context.currentTime + .6);
+}
+
+function schedule(callback, delay) {
+  const timeout = window.setTimeout(() => {
+    sequenceTimeouts = sequenceTimeouts.filter((item) => item !== timeout);
+    callback();
+  }, delay);
+  sequenceTimeouts.push(timeout);
+}
+
+function clearSequence() {
+  sequenceTimeouts.forEach((timeout) => window.clearTimeout(timeout));
+  sequenceTimeouts = [];
+  if (heartbeatTimer) window.clearTimeout(heartbeatTimer);
+  heartbeatTimer = null;
+}
+
+function showToast(message) {
+  elements.toast.textContent = message;
+  elements.toast.classList.add("is-visible");
+  if (toastTimer) window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => elements.toast.classList.remove("is-visible"), 3000);
 }
 
 function launchConfetti(amount = 45) {
-  const colors = ["#e87968", "#9f4057", "#8ca99a", "#f7b89a", "#e5b94d"];
+  const colors = ["#e87968", "#a8432f", "#f7d58c", "#e8c27a", "#fff3d0"];
   for (let index = 0; index < amount; index += 1) {
     const piece = document.createElement("i");
     piece.className = "confetto";
@@ -219,13 +323,117 @@ function launchConfetti(amount = 45) {
   }
 }
 
+function initSky() {
+  const canvas = elements.sky;
+  const context = canvas.getContext("2d");
+  const particles = [];
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const resize = () => {
+    canvas.width = window.innerWidth * devicePixelRatio;
+    canvas.height = window.innerHeight * devicePixelRatio;
+    context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  };
+  const create = () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    size: Math.random() * 1.8 + .5,
+    speed: Math.random() * .18 + .05,
+    phase: Math.random() * Math.PI * 2,
+    gold: Math.random() > .42
+  });
+  resize();
+  for (let index = 0; index < Math.min(70, Math.max(24, Math.floor(window.innerWidth / 12))); index += 1) particles.push(create());
+  window.addEventListener("resize", resize);
+  const draw = (time) => {
+    context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    particles.forEach((particle) => {
+      if (!reduced) {
+        particle.y -= particle.speed;
+        particle.x += Math.sin(time * .0007 + particle.phase) * .12;
+        if (particle.y < -10) { particle.y = window.innerHeight + 10; particle.x = Math.random() * window.innerWidth; }
+      }
+      const alpha = reduced ? .5 : .25 + (Math.sin(time * .003 + particle.phase) + 1) * .25;
+      context.globalAlpha = alpha;
+      context.fillStyle = particle.gold ? "#f7d58c" : "#ead9dc";
+      context.shadowBlur = particle.gold ? 10 : 0;
+      context.shadowColor = "#f7d58c";
+      context.beginPath();
+      context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      context.fill();
+    });
+    context.globalAlpha = 1;
+    context.shadowBlur = 0;
+    window.requestAnimationFrame(draw);
+  };
+  window.requestAnimationFrame(draw);
+}
+
+function setupHero() {
+  const name = document.querySelector("#heroTitle span");
+  name.innerHTML = [...name.textContent].map((letter, index) => `<i style="--letter-index:${index}">${letter === " " ? "&nbsp;" : letter}</i>`).join("");
+  const empty = document.querySelector(".postcard--empty");
+  const activate = () => showToast("Esa foto la llenamos pronto 📸");
+  empty.addEventListener("click", activate);
+  empty.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); activate(); } });
+}
+
+function saveMoment() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 1080;
+  canvas.height = 1440;
+  const context = canvas.getContext("2d");
+  const gradient = context.createLinearGradient(0, 0, 1080, 1440);
+  gradient.addColorStop(0, "#3b173e");
+  gradient.addColorStop(1, "#120b1a");
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, 1080, 1440);
+  context.fillStyle = "#fff8ed";
+  context.fillRect(72, 90, 936, 1260);
+  const image = new Image();
+  image.onload = () => {
+    const scale = Math.max(864 / image.width, 930 / image.height);
+    const width = image.width * scale;
+    const height = image.height * scale;
+    context.save();
+    context.beginPath();
+    context.rect(108, 126, 864, 930);
+    context.clip();
+    context.drawImage(image, 108 + (864 - width) / 2, 126 + (930 - height) / 2, width, height);
+    context.restore();
+    context.fillStyle = "#3a2618";
+    context.font = "700 74px Caveat, cursive";
+    context.fillText("Kayra · feliz cumpleaños", 108, 1170);
+    context.fillStyle = "#a8432f";
+    context.font = "600 42px Caveat, cursive";
+    context.fillText("Y esto apenas comienza ✨", 108, 1250);
+    const link = document.createElement("a");
+    link.download = "Recuerdo-Kayra.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+    showToast("Guardado. Lo mejor viene después 💛");
+  };
+  image.src = "assets/foto-recuerdo.webp";
+}
+
+elements.paper.addEventListener("pointermove", (event) => {
+  if (!elements.paper.classList.contains("paper--dark")) return;
+  const bounds = elements.paper.getBoundingClientRect();
+  elements.paper.style.setProperty("--x", `${event.clientX - bounds.left}px`);
+  elements.paper.style.setProperty("--y", `${event.clientY - bounds.top}px`);
+});
+elements.paper.addEventListener("pointerdown", (event) => {
+  const bounds = elements.paper.getBoundingClientRect();
+  elements.paper.style.setProperty("--x", `${event.clientX - bounds.left}px`);
+  elements.paper.style.setProperty("--y", `${event.clientY - bounds.top}px`);
+});
 document.querySelector("#startButton").addEventListener("click", () => document.querySelector("#sobres").scrollIntoView({ behavior: "smooth" }));
 document.querySelector("#closeLetter").addEventListener("click", closeLetter);
 document.querySelector("#closeFinal").addEventListener("click", () => elements.finalDialog.close());
+document.querySelector("#saveMoment").addEventListener("click", saveMoment);
 elements.screamer.addEventListener("click", closeScreamer);
 elements.screamer.addEventListener("keydown", (event) => {
   if (event.key === "Enter" || event.key === " ") closeScreamer();
 });
 elements.letterDialog.addEventListener("cancel", (event) => { event.preventDefault(); closeLetter(); });
 elements.finalDialog.addEventListener("cancel", (event) => { event.preventDefault(); elements.finalDialog.close(); });
-window.addEventListener("load", () => { launchConfetti(32); loadLetters(); });
+window.addEventListener("load", () => { initSky(); setupHero(); launchConfetti(32); loadLetters(); });
