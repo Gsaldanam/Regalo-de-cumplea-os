@@ -18,22 +18,26 @@
     <section class="hero" id="inicio" aria-labelledby="heroTitle">
       <div class="hero__glow hero__glow--one"></div>
       <div class="hero__glow hero__glow--two"></div>
-      <p class="eyebrow">Un paseo por nuestros recuerdos</p>
-      <h1 id="heroTitle">¡Feliz cumpleaños, <span>Kayra</span>!</h1>
-      <p class="hero__intro">Preparé seis pequeñas paradas. Abre cada sobre en orden y deja que la historia haga lo suyo.</p>
+      <div class="hero__postcards" aria-label="Postales de nuestros recuerdos">
+        <figure class="postcard postcard--photo">
+          <div class="postcard__frame">
+            <img src="assets/foto%20kayra.jpeg" alt="Kayra y yo juntos" />
+          </div>
+        </figure>
+        <figure class="postcard postcard--empty">
+          <div class="postcard__frame" aria-hidden="true"></div>
+          <figcaption>Nos faltan fotos juntos</figcaption>
+        </figure>
+      </div>
+      <h1 id="heroTitle">¡Feliz cumpleaños, <span>Kayra!</span></h1>
+      <p class="hero__intro">Espero te guste este pequeño detalle, un paseito al pasado un pelin nostalgico.</p>
       <button class="button button--primary" id="startButton" type="button">
-        Empezar <span aria-hidden="true">↓</span>
+        Ir <span aria-hidden="true">↓</span>
       </button>
-      <p class="hero__hint">Hecho con cariño, paciencia y un poquito de drama</p>
+      <p class="hero__hint">Hecho especialmente para la mujer más increible que he conocido.</p>
     </section>
 
-    <section class="journey" id="sobres" aria-labelledby="journeyTitle">
-      <div class="section-heading">
-        <p class="eyebrow">Capítulo a capítulo</p>
-        <h2 id="journeyTitle">Seis sobres, una historia</h2>
-        <p>El camino se irá dibujando a medida que avances.</p>
-      </div>
-
+    <section class="journey" id="sobres" aria-label="Camino de cartas">
       <div class="journey-map" id="journeyMap">
         <svg class="path-line" viewBox="0 0 1000 1280" preserveAspectRatio="none" aria-hidden="true">
           <path class="path-line__base" d="M250 100 C750 100 750 310 250 310 S250 520 750 520 S750 730 250 730 S250 940 750 940 S750 1150 500 1150"></path>
@@ -41,8 +45,6 @@
         </svg>
         <div class="envelopes" id="envelopes" aria-live="polite"></div>
       </div>
-
-      <div class="progress-note"><span id="progressCount">1</span> de 6 recuerdos disponibles</div>
     </section>
   </main>
 

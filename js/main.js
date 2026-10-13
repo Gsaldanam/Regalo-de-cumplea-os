@@ -5,6 +5,15 @@ let desbloqueadas = getUnlockedLetters();
 let activeLetterId = null;
 let soundEnabled = true;
 let screamerTimeout = null;
+const cartasDeRespaldo = [
+  { id: 1, titulo: "La pregunta importante", fecha: "Parada 01 · La evidencia", tipo: "votacion", texto: "Hay debates que merecen una respuesta seria, científica y completamente imparcial.", imagen: "" },
+  { id: 2, titulo: "Una visita a la casita del terror", fecha: "Parada 02 · El susto", tipo: "screamer", texto: "Recuerdo aquella casita del terror y la valiente estrategia de fingir que todo estaba bajo control. Spoiler: no lo estaba.", imagen: "" },
+  { id: 3, titulo: "Supuestamente fue casualidad", fecha: "Parada 03 · Parque Kennedy", tipo: "normal", texto: "A veces la casualidad se esfuerza demasiado en parecer casualidad. Como aquella reunión supuestamente espontánea en el parque Kennedy, con sus coincidencias sospechosamente perfectas y esa conversación que se alargó mucho más de lo planeado. Me gusta pensar que el universo solo estaba haciendo un pequeño favor.", imagen: "" },
+  { id: 4, titulo: "Sal, sol y planes improvisados", fecha: "Parada 04 · La playa", tipo: "normal", texto: "[EDITA AQUÍ] Escribe el recuerdo de la playa: una escena, una frase que se quedó contigo y ese detalle que solo ustedes dos entienden. Puedes reemplazar todo este párrafo libremente.", imagen: "" },
+  { id: 5, titulo: "Una película y mil comentarios", fecha: "Parada 05 · El cine", tipo: "normal", texto: "[EDITA AQUÍ] Cuenta el recuerdo del cine y de aquella conversación sobre el futuro. Añade aquí una anécdota, una predicción imposible o una frase que quieras conservar para siempre.", imagen: "" },
+  { id: 6, titulo: "Lo que todavía nos queda", fecha: "Parada 06 · Un recuerdo más", tipo: "normal", texto: "[EDITA AQUÍ] Este espacio es para un recuerdo personal más. Puede ser pequeño: una caminata, una llamada, una risa inesperada o cualquier momento que merezca su propia página.", imagen: "" }
+];
+const mensajeFinalDeRespaldo = "Gracias por ser tú, por cada conversación inesperada y por todos los recuerdos que todavía nos faltan. Que este nuevo año te encuentre rodeada de cosas bonitas, gente que te quiera bien y muchas razones para sonreír. Feliz cumpleaños, Kayra.";
 
 const elements = {
   envelopes: document.querySelector("#envelopes"),
@@ -47,7 +56,10 @@ async function loadLetters() {
     renderEnvelopes();
     updateProgress();
   } catch (error) {
-    elements.envelopes.innerHTML = "<p class=\"load-error\">No se pudieron cargar las cartas. Revisa que el sitio se esté ejecutando desde un servidor local.</p>";
+    cartas = cartasDeRespaldo;
+    elements.finalMessage.textContent = mensajeFinalDeRespaldo;
+    renderEnvelopes();
+    updateProgress();
     console.error(error);
   }
 }
@@ -57,14 +69,10 @@ function renderEnvelopes() {
   elements.envelopes.innerHTML = cartas.map((carta) => {
     const isUnlocked = desbloqueadas.includes(carta.id);
     const status = isUnlocked ? "Disponible" : "Bloqueado";
-    const lock = isUnlocked ? "✦" : "🔒";
     return `
       <article class="envelope-card ${isUnlocked ? "" : "is-locked"}" data-id="${carta.id}">
         <button class="envelope-card__button" type="button" ${isUnlocked ? "" : "disabled"} aria-label="${status}: ${carta.titulo}">
-          <div class="envelope-card__number"><span>Sobre 0${carta.id}</span><span class="envelope-card__lock" aria-hidden="true">${lock}</span></div>
-          <h3>${carta.titulo}</h3>
-          <p>${isUnlocked ? carta.fecha : "Completa el recuerdo anterior"}</p>
-          <div class="envelope-icon" aria-hidden="true"></div>
+          <img class="envelope-card__image" src="assets/sobrecarta.png" alt="" aria-hidden="true">
         </button>
       </article>`;
   }).join("");
