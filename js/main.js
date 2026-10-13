@@ -71,7 +71,7 @@ function renderEnvelopes() {
     return `
       <article class="envelope-card ${isUnlocked ? "" : "is-locked"}" data-id="${carta.id}">
         <button class="envelope-card__button" type="button" ${isUnlocked ? "" : "disabled"} aria-label="${status}: ${carta.titulo}">
-          <img class="envelope-card__image" src="assets/sobrecarta.png" alt="" aria-hidden="true">
+          <img class="envelope-card__image" src="assets/sobrecarta.webp" alt="" aria-hidden="true">
         </button>
       </article>`;
   }).join("");
@@ -94,8 +94,8 @@ function openLetter(id) {
   if (!carta || !desbloqueadas.includes(id)) return;
   activeLetterId = id;
   elements.letterTitle.textContent = carta.titulo;
-  elements.letterDate.textContent = carta.fecha;
-  elements.letterNumber.textContent = `Carta ${String(carta.id).padStart(2, "0")}`;
+  elements.letterDate.textContent = `Carta ${carta.id}: ${carta.fecha.toLowerCase()}`;
+  elements.letterNumber.textContent = "";
   elements.letterContent.innerHTML = "";
 
   if (carta.tipo === "votacion") renderVote(carta);
@@ -138,12 +138,16 @@ function renderVote(carta) {
   options.className = "vote-options";
   const result = document.createElement("p");
   result.className = "vote-result";
+  result.setAttribute("aria-live", "polite");
   ["Chris Evans", "Gavi"].forEach((option) => {
     const button = document.createElement("button");
     button.className = "vote-button";
     button.type = "button";
+    button.setAttribute("aria-pressed", "false");
     button.textContent = option;
     button.addEventListener("click", () => {
+      options.querySelectorAll("button").forEach((item) => { item.setAttribute("aria-pressed", "false"); });
+      button.setAttribute("aria-pressed", "true");
       result.textContent = option === "Gavi" ? "Buen intento... pero gana Chris Evans. La comisión ya votó. 😌" : "Correcto. Chris Evans gana por decisión unánime y evidente.";
       options.querySelectorAll("button").forEach((item) => { item.disabled = true; });
     });
