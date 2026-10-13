@@ -47,7 +47,7 @@ function saveProgress() {
 
 async function loadLetters() {
   try {
-    const response = await fetch("data/cartas.json");
+    const response = await fetch("data/cartas.json?v=2", { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     cartas = data.cartas;
