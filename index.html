@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=DM+Sans:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=4">
+  <link rel="stylesheet" href="css/styles.css?v=5">
 </head>
 <body>
   <canvas id="sky" aria-hidden="true"></canvas>
@@ -21,16 +21,18 @@
       <div class="hero__glow hero__glow--two"></div>
       <div class="hero__postcards" aria-label="Postales de nuestros recuerdos">
         <figure class="postcard postcard--photo">
-          <div class="postcard__frame">
-            <img src="assets/foto-recuerdo.webp" alt="Kayra y yo juntos" />
-          </div>
+          <button class="postcard__button" id="photoButton" type="button" aria-label="Ver foto de Kayra y yo en grande">
+            <div class="postcard__frame">
+              <img src="assets/foto-recuerdo.webp" alt="Kayra y yo juntos" />
+            </div>
+          </button>
         </figure>
         <figure class="postcard postcard--empty" tabindex="0" role="button" aria-label="Foto pendiente: Esa foto la llenamos pronto">
           <div class="postcard__frame" aria-hidden="true"></div>
           <figcaption>Nos faltan fotos juntos</figcaption>
         </figure>
       </div>
-      <h1 id="heroTitle">¡Feliz cumpleaños, <span>Kayra!</span></h1>
+      <h1 id="heroTitle">¡Feliz cumpleaños, <span>Kayra</span><b class="hero-title__exclamation">!</b></h1>
       <p class="hero__intro">Espero te guste este pequeño detalle, un paseito al pasado un pelin nostalgico.</p>
       <button class="button button--primary" id="startButton" type="button">
         Empezar el paseo <span aria-hidden="true">↓</span>
@@ -50,8 +52,8 @@
   </main>
 
   <dialog class="letter-dialog" id="letterDialog" aria-labelledby="letterTitle">
-    <img class="letter-face letter-face--chris" src="assets/chris-evans.webp" alt="Chris Evans">
-    <img class="letter-face letter-face--gavi" src="assets/gavi.webp" alt="Gavi">
+    <img class="letter-face letter-face--chris" src="assets/chris-evans.webp" alt="Chris Evans" hidden>
+    <img class="letter-face letter-face--gavi" src="assets/gavi.webp" alt="Gavi" hidden>
     <div class="letter-dialog__paper">
       <button class="icon-button letter-dialog__close" id="closeLetter" type="button" aria-label="Cerrar carta">×</button>
       <div class="letter-dialog__topline"><span id="letterDate"></span><span id="letterNumber"></span></div>
@@ -65,6 +67,11 @@
     </div>
   </dialog>
 
+  <dialog class="photo-dialog" id="photoDialog" aria-label="Foto ampliada">
+    <button class="icon-button photo-dialog__close" id="closePhoto" type="button" aria-label="Cerrar foto">×</button>
+    <img src="assets/foto-recuerdo.webp" alt="Kayra y yo juntos" />
+  </dialog>
+
   <dialog class="final-dialog" id="finalDialog" aria-labelledby="finalTitle">
     <div class="final-dialog__content">
       <p class="eyebrow">Fin del recorrido</p>
@@ -76,6 +83,6 @@
   </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="js/main.js?v=3"></script>
+  <script src="js/main.js?v=4"></script>
 </body>
 </html>

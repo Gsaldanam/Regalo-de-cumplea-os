@@ -24,6 +24,8 @@ const elements = {
   envelopes: document.querySelector("#envelopes"),
   journeyMap: document.querySelector("#journeyMap"),
   letterDialog: document.querySelector("#letterDialog"),
+  letterFaces: document.querySelectorAll(".letter-face"),
+  photoDialog: document.querySelector("#photoDialog"),
   letterTitle: document.querySelector("#letterTitle"),
   letterDate: document.querySelector("#letterDate"),
   letterNumber: document.querySelector("#letterNumber"),
@@ -105,6 +107,7 @@ function openLetter(id) {
   elements.letterDate.textContent = `Carta ${carta.id}: ${carta.fecha.toLowerCase()}`;
   elements.letterNumber.textContent = "";
   elements.letterContent.innerHTML = "";
+  elements.letterFaces.forEach((face) => { face.hidden = carta.id !== 1; });
 
   if (carta.tipo === "votacion") renderVote(carta);
   else renderNormalLetter(carta);
@@ -370,9 +373,9 @@ function initSky() {
 
 function setupHero() {
   const name = document.querySelector("#heroTitle span");
-  name.innerHTML = [...name.textContent].map((letter, index) => `<i style="--letter-index:${index}">${letter === " " ? "&nbsp;" : letter}</i>`).join("");
+  name.innerHTML = [...name.textContent].map((letter, index) => `<i class="${letter === "y" ? "hero-title__y" : ""}" style="--letter-index:${index}">${letter === " " ? "&nbsp;" : letter}</i>`).join("");
   const empty = document.querySelector(".postcard--empty");
-  const activate = () => showToast("Esa foto la llenamos pronto 📸");
+  const activate = () => showToast("Tenemos una salida pendiente 📸");
   empty.addEventListener("click", activate);
   empty.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); activate(); } });
 }
@@ -428,6 +431,11 @@ elements.paper.addEventListener("pointerdown", (event) => {
 });
 document.querySelector("#startButton").addEventListener("click", () => document.querySelector("#sobres").scrollIntoView({ behavior: "smooth" }));
 document.querySelector("#closeLetter").addEventListener("click", closeLetter);
+document.querySelector("#photoButton").addEventListener("click", () => elements.photoDialog.showModal());
+document.querySelector("#closePhoto").addEventListener("click", () => elements.photoDialog.close());
+elements.photoDialog.addEventListener("click", (event) => {
+  if (event.target === elements.photoDialog) elements.photoDialog.close();
+});
 document.querySelector("#closeFinal").addEventListener("click", () => elements.finalDialog.close());
 document.querySelector("#saveMoment").addEventListener("click", saveMoment);
 elements.screamer.addEventListener("click", closeScreamer);
@@ -435,5 +443,6 @@ elements.screamer.addEventListener("keydown", (event) => {
   if (event.key === "Enter" || event.key === " ") closeScreamer();
 });
 elements.letterDialog.addEventListener("cancel", (event) => { event.preventDefault(); closeLetter(); });
+elements.photoDialog.addEventListener("cancel", (event) => { event.preventDefault(); elements.photoDialog.close(); });
 elements.finalDialog.addEventListener("cancel", (event) => { event.preventDefault(); elements.finalDialog.close(); });
 window.addEventListener("load", () => { initSky(); setupHero(); launchConfetti(32); loadLetters(); });
