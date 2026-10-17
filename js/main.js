@@ -3,11 +3,7 @@ const totalCartas = 6;
 let cartas = [];
 let desbloqueadas = getUnlockedLetters();
 let activeLetterId = null;
-let soundEnabled = true;
 let sequenceTimeouts = [];
-let heartbeatTimer = null;
-let heartbeatCount = 0;
-let heartbeatInterval = 900;
 let audioContext = null;
 let toastTimer = null;
 const cartasDeRespaldo = [
@@ -30,6 +26,7 @@ const elements = {
   letterDate: document.querySelector("#letterDate"),
   letterNumber: document.querySelector("#letterNumber"),
   letterContent: document.querySelector("#letterContent"),
+  letterPostcard: document.querySelector("#letterPostcard"),
   finalDialog: document.querySelector("#finalDialog"),
   finalMessage: document.querySelector("#finalMessage"),
   screamer: document.querySelector("#screamer"),
@@ -108,13 +105,14 @@ function openLetter(id) {
   elements.letterNumber.textContent = "";
   elements.letterContent.innerHTML = "";
   elements.letterFaces.forEach((face) => { face.hidden = carta.id !== 1; });
+  elements.letterPostcard.hidden = carta.id !== 2;
 
   if (carta.tipo === "votacion") renderVote(carta);
   else renderNormalLetter(carta);
 
   elements.letterDialog.showModal();
   if (carta.tipo === "screamer") {
-    schedule(() => startDarkSequence(), 500);
+    playScreamer();
   }
 }
 
@@ -131,18 +129,6 @@ function renderNormalLetter(carta) {
     image.alt = `Recuerdo: ${carta.titulo}`;
     image.className = "letter-image";
     elements.letterContent.append(image);
-  }
-  if (carta.tipo === "screamer") {
-    const toggle = document.createElement("button");
-    toggle.className = "mute-toggle";
-    toggle.type = "button";
-    toggle.textContent = "Silenciar susto";
-    toggle.setAttribute("aria-label", "Silenciar susto");
-    elements.letterContent.append(toggle);
-    toggle.addEventListener("click", () => {
-      soundEnabled = !soundEnabled;
-      toggle.textContent = soundEnabled ? "Silenciar susto" : "Activar sonido";
-    });
   }
 }
 
@@ -183,7 +169,7 @@ function renderVote(carta) {
     button.addEventListener("click", () => {
       options.querySelectorAll("button").forEach((item) => { item.setAttribute("aria-pressed", "false"); });
       button.setAttribute("aria-pressed", "true");
-      result.textContent = option === "Gavi" ? "Buen intento... pero gana Chris Evans. La comisión ya votó. 😌" : "Correcto. Chris Evans gana por decisión unánime y evidente.";
+      result.textContent = option === "Gavi" ? "Veo que tendremos que hablar seriamente sobre este asunto 🧐 AJSJAS." : "Eyyyyy, muy biennnn, otra cosa más en la que hacemos match 🙃.";
       options.querySelectorAll("button").forEach((item) => { item.disabled = true; });
     });
     options.append(button);
@@ -210,49 +196,11 @@ function closeLetter() {
   activeLetterId = null;
 }
 
-function startDarkSequence() {
-  if (!elements.letterDialog.open || cartas.find((item) => item.id === activeLetterId)?.tipo !== "screamer") return;
-  elements.paper.classList.add("paper--dark");
-  heartbeatCount = 0;
-  heartbeatInterval = 900;
-  heartbeat();
-}
-
-function heartbeat() {
-  if (!elements.letterDialog.open || !elements.paper.classList.contains("paper--dark")) return;
-  heartbeatCount += 1;
-  if (soundEnabled) playHeartbeat();
-  if (heartbeatCount >= 9) {
-    schedule(playScreamer, 180);
-    return;
-  }
-  heartbeatInterval = Math.max(380, heartbeatInterval - 70);
-  heartbeatTimer = window.setTimeout(heartbeat, heartbeatInterval);
-}
-
-function playHeartbeat() {
-  const context = getAudioContext();
-  if (!context) return;
-  const now = context.currentTime;
-  [0, .16].forEach((offset) => {
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.type = "sine";
-    oscillator.frequency.value = 55;
-    const volume = Math.min(.6, .15 * (1.18 ** Math.max(0, heartbeatCount - 1)));
-    gain.gain.setValueAtTime(volume, now + offset);
-    gain.gain.exponentialRampToValueAtTime(.001, now + offset + .12);
-    oscillator.connect(gain).connect(context.destination);
-    oscillator.start(now + offset);
-    oscillator.stop(now + offset + .13);
-  });
-}
-
 function playScreamer() {
   if (!elements.letterDialog.open) return;
   elements.screamer.classList.add("is-active");
   elements.screamer.setAttribute("aria-hidden", "false");
-  if (soundEnabled) playTone();
+  playTone();
   if (navigator.vibrate) navigator.vibrate([200, 60, 200]);
   schedule(closeScreamer, 1400);
 }
@@ -300,8 +248,6 @@ function schedule(callback, delay) {
 function clearSequence() {
   sequenceTimeouts.forEach((timeout) => window.clearTimeout(timeout));
   sequenceTimeouts = [];
-  if (heartbeatTimer) window.clearTimeout(heartbeatTimer);
-  heartbeatTimer = null;
 }
 
 function showToast(message) {
@@ -408,7 +354,7 @@ function saveMoment() {
     context.fillText("Kayra · feliz cumpleaños", 108, 1170);
     context.fillStyle = "#a8432f";
     context.font = "600 42px Caveat, cursive";
-    context.fillText("Y esto apenas comienza ✨", 108, 1250);
+    context.fillText("Te quiero, hasta el infinito y mas allá ✨", 108, 1250);
     const link = document.createElement("a");
     link.download = "Recuerdo-Kayra.png";
     link.href = canvas.toDataURL("image/png");

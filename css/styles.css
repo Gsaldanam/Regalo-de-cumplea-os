@@ -96,6 +96,7 @@ h1 .hero-title__exclamation { position: relative; z-index: 30; display: inline-b
 .envelope-card__button { display: block; width: 100%; padding: 0; border: 0; color: inherit; background: transparent; cursor: pointer; text-align: left; }
 .envelope-card__image { display: block; width: 100%; aspect-ratio: 5 / 4; object-fit: cover; border-radius: 8px; }
 .letter-dialog, .final-dialog, .photo-dialog { position: relative; width: min(92vw, 680px); padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.letter-dialog { width: min(96vw, 900px); }
 .letter-dialog { scrollbar-width: none; }
 .letter-dialog::-webkit-scrollbar { display: none; }
 .letter-dialog::backdrop, .final-dialog::backdrop, .photo-dialog::backdrop { background: rgba(25, 15, 30, .72); backdrop-filter: blur(5px); }
@@ -113,6 +114,7 @@ h1 .hero-title__exclamation { position: relative; z-index: 30; display: inline-b
 .letter-face { position: absolute; z-index: 2; width: clamp(5rem, 11vw, 7.5rem); object-fit: contain; filter: drop-shadow(0 10px 10px rgba(20, 8, 20, .28)); animation: float-side 4.5s ease-in-out infinite; pointer-events: none; }
 .letter-face--chris { top: 36%; left: 0; }
 .letter-face--gavi { right: 0; bottom: 10%; animation-delay: -2.2s; }
+.letter-postcard { position: absolute; top: 34%; right: 2%; z-index: 3; display: block; width: 175px; padding: 8px; border: 1px solid rgba(120, 74, 45, .35); border-radius: 14px 10px 16px 11px; background: #fffdf9; box-shadow: 0 16px 28px rgba(38, 20, 12, .28); object-fit: cover; transform: rotate(8deg); }
 .icon-button { border: 0; color: var(--coral); background: transparent; cursor: pointer; font-size: 2rem; line-height: 1; }
 .letter-dialog__close { position: absolute; top: 14px; right: 14px; z-index: 2; display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid rgba(168, 67, 47, .28); border-radius: 50%; color: var(--coral); background: rgba(251, 243, 224, .72); font-size: 1.6rem; }
 .vote-options { display: grid; gap: .8rem; margin: 1.5rem 0; }
@@ -122,7 +124,6 @@ h1 .hero-title__exclamation { position: relative; z-index: 30; display: inline-b
 .vote-result { min-height: 2rem; color: var(--coral); font-family: var(--hand); font-size: 1.6rem; line-height: 1.15; }
 .letter-image { display: block; max-width: 100%; margin: 1rem auto; border-radius: 14px; box-shadow: 0 12px 24px rgba(107, 58, 51, .14); }
 .scream-note { color: var(--muted); font-size: .8rem; }
-.mute-toggle { margin-top: .3rem; padding: 0; border: 0; color: var(--berry); background: transparent; cursor: pointer; text-decoration: underline; }
 .final-dialog__content { padding: 3.5rem 2rem; color: white; background: var(--berry); text-align: center; }
 .final-dialog h2 { margin: .4rem 0 1rem; font-family: var(--script); font-size: clamp(3rem, 10vw, 5.5rem); font-weight: 400; line-height: .9; }
 .final-dialog p:not(.eyebrow) { max-width: 34rem; margin: 0 auto 2rem; line-height: 1.75; }
@@ -162,6 +163,7 @@ h1 .hero-title__exclamation { position: relative; z-index: 30; display: inline-b
   .letter-face { width: 2.5rem; }
   .letter-face--chris { top: 40%; left: .1rem; }
   .letter-face--gavi { right: .1rem; bottom: 10%; }
+  .letter-postcard { top: 23%; right: .5rem; width: 108px; padding: 5px; border-radius: 10px 8px 11px 8px; transform: rotate(10deg); }
   .letter-dialog__close { top: 14px; right: 14px; }
   .journey { padding: 2rem .75rem 6rem; }
   .journey-map, .envelopes { min-height: 1180px; }
