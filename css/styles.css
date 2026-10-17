@@ -96,7 +96,7 @@ h1 .hero-title__exclamation { position: relative; z-index: 30; display: inline-b
 .envelope-card__button { display: block; width: 100%; padding: 0; border: 0; color: inherit; background: transparent; cursor: pointer; text-align: left; }
 .envelope-card__image { display: block; width: 100%; aspect-ratio: 5 / 4; object-fit: cover; border-radius: 8px; }
 .letter-dialog, .final-dialog, .photo-dialog { position: relative; width: min(92vw, 680px); padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
-.letter-dialog { width: min(96vw, 900px); }
+.letter-dialog { width: min(92vw, 680px); }
 .letter-dialog { scrollbar-width: none; overflow: visible; }
 .letter-dialog::-webkit-scrollbar { display: none; }
 .letter-dialog::backdrop, .final-dialog::backdrop, .photo-dialog::backdrop { background: rgba(25, 15, 30, .72); backdrop-filter: blur(5px); }
@@ -115,7 +115,8 @@ h1 .hero-title__exclamation { position: relative; z-index: 30; display: inline-b
 .letter-face { position: absolute; z-index: 2; width: clamp(5rem, 11vw, 7.5rem); object-fit: contain; filter: drop-shadow(0 10px 10px rgba(20, 8, 20, .28)); animation: float-side 4.5s ease-in-out infinite; pointer-events: none; }
 .letter-face--chris { top: 36%; left: 0; }
 .letter-face--gavi { right: 0; bottom: 10%; animation-delay: -2.2s; }
-.letter-postcard-button { position: absolute; top: 34%; right: 2%; z-index: 3; display: block; width: 175px; padding: 8px; border: 2px solid #d8c08c; border-radius: 14px 10px 16px 11px; background: #fffdf9; box-shadow: 0 16px 28px rgba(38, 20, 12, .28); cursor: pointer; transform: rotate(8deg); }
+.letter-postcard-button { position: absolute; top: 34%; right: -116px; z-index: 10; display: block; width: 175px; padding: 8px; border: 2px solid #d8c08c; border-radius: 14px 10px 16px 11px; background: #fffdf9; box-shadow: 0 16px 28px rgba(38, 20, 12, .28); cursor: pointer; pointer-events: auto; touch-action: manipulation; transform: rotate(8deg); }
+.letter-postcard-button[hidden] { display: none; }
 .letter-postcard { display: block; width: 100%; border-radius: 6px; object-fit: cover; }
 .icon-button { border: 0; color: var(--coral); background: transparent; cursor: pointer; font-size: 2rem; line-height: 1; }
 .letter-dialog__close { position: absolute; top: 14px; right: 14px; z-index: 2; display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid rgba(168, 67, 47, .28); border-radius: 50%; color: var(--coral); background: rgba(251, 243, 224, .72); font-size: 1.6rem; }
@@ -165,7 +166,7 @@ h1 .hero-title__exclamation { position: relative; z-index: 30; display: inline-b
   .letter-face { width: 2.5rem; }
   .letter-face--chris { top: 40%; left: .1rem; }
   .letter-face--gavi { right: .1rem; bottom: 10%; }
-  .letter-postcard-button { top: 12%; right: 1rem; z-index: 5; width: 112px; padding: 5px; border-radius: 10px 8px 11px 8px; transform: rotate(10deg); }
+  .letter-postcard-button { top: 12%; right: 1rem; z-index: 25; width: 112px; padding: 5px; border-radius: 10px 8px 11px 8px; transform: rotate(10deg); }
   .letter-dialog__close { top: 14px; right: 14px; }
   .journey { padding: 2rem .75rem 6rem; }
   .journey-map, .envelopes { min-height: 1180px; }
