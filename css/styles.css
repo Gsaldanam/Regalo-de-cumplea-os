@@ -157,7 +157,7 @@ h1 .hero-title__exclamation { position: relative; z-index: 30; display: inline-b
   .postcard--empty { transform: rotate(5deg) translateY(1rem); }
   .postcard figcaption { font-size: .8rem; }
   .hero__intro { max-width: 21rem; margin-bottom: 1.5rem; font-size: .9rem; }
-  .hero__hint { max-width: 18rem; margin: 1.2rem auto 0; line-height: 1.4; }
+  .hero__hint { max-width: 13rem; margin: .2rem auto 0; line-height: 1.4; transform: translateY(-.4rem); }
   .letter-dialog { width: calc(100% - 1rem); }
   .photo-dialog { width: calc(100% - 2rem); }
   .photo-dialog img { border-width: .4rem; }
