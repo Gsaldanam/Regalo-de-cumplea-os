@@ -54,7 +54,9 @@
   <dialog class="letter-dialog" id="letterDialog" aria-labelledby="letterTitle">
     <img class="letter-face letter-face--chris" src="assets/chris-evans.webp" alt="Chris Evans" hidden>
     <img class="letter-face letter-face--gavi" src="assets/gavi.webp" alt="Gavi" hidden>
-    <img class="letter-postcard" id="letterPostcard" src="assets/casita del terror.jpg" alt="La casita del terror" hidden>
+    <button class="letter-postcard-button" id="letterPostcardButton" type="button" aria-label="Ver la casita del terror ampliada" hidden>
+      <img class="letter-postcard" id="letterPostcard" src="assets/casita del terror.jpg" alt="La casita del terror">
+    </button>
     <div class="letter-dialog__paper">
       <button class="icon-button letter-dialog__close" id="closeLetter" type="button" aria-label="Cerrar carta">×</button>
       <div class="letter-dialog__topline"><span id="letterDate"></span><span id="letterNumber"></span></div>
@@ -70,7 +72,7 @@
 
   <dialog class="photo-dialog" id="photoDialog" aria-label="Foto ampliada">
     <button class="icon-button photo-dialog__close" id="closePhoto" type="button" aria-label="Cerrar foto">×</button>
-    <img src="assets/foto-recuerdo.webp" alt="Kayra y yo juntos" />
+    <img id="photoImage" src="assets/foto-recuerdo.webp" alt="Kayra y yo juntos" />
   </dialog>
 
   <dialog class="final-dialog" id="finalDialog" aria-labelledby="finalTitle">

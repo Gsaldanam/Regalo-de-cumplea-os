@@ -22,10 +22,12 @@ const elements = {
   letterDialog: document.querySelector("#letterDialog"),
   letterFaces: document.querySelectorAll(".letter-face"),
   photoDialog: document.querySelector("#photoDialog"),
+  photoImage: document.querySelector("#photoImage"),
   letterTitle: document.querySelector("#letterTitle"),
   letterDate: document.querySelector("#letterDate"),
   letterNumber: document.querySelector("#letterNumber"),
   letterContent: document.querySelector("#letterContent"),
+  letterPostcardButton: document.querySelector("#letterPostcardButton"),
   letterPostcard: document.querySelector("#letterPostcard"),
   finalDialog: document.querySelector("#finalDialog"),
   finalMessage: document.querySelector("#finalMessage"),
@@ -105,7 +107,7 @@ function openLetter(id) {
   elements.letterNumber.textContent = "";
   elements.letterContent.innerHTML = "";
   elements.letterFaces.forEach((face) => { face.hidden = carta.id !== 1; });
-  elements.letterPostcard.hidden = carta.id !== 2;
+  elements.letterPostcardButton.hidden = carta.id !== 2;
 
   if (carta.tipo === "votacion") renderVote(carta);
   else renderNormalLetter(carta);
@@ -377,7 +379,14 @@ elements.paper.addEventListener("pointerdown", (event) => {
 });
 document.querySelector("#startButton").addEventListener("click", () => document.querySelector("#sobres").scrollIntoView({ behavior: "smooth" }));
 document.querySelector("#closeLetter").addEventListener("click", closeLetter);
-document.querySelector("#photoButton").addEventListener("click", () => elements.photoDialog.showModal());
+function openPhoto(src, alt) {
+  elements.photoImage.src = src;
+  elements.photoImage.alt = alt;
+  elements.photoImage.classList.toggle("photo-dialog__terror", src.includes("casita del terror"));
+  elements.photoDialog.showModal();
+}
+document.querySelector("#photoButton").addEventListener("click", () => openPhoto("assets/foto-recuerdo.webp", "Kayra y yo juntos"));
+document.querySelector("#letterPostcardButton").addEventListener("click", () => openPhoto("assets/casita del terror.jpg", "La casita del terror"));
 document.querySelector("#closePhoto").addEventListener("click", () => elements.photoDialog.close());
 elements.photoDialog.addEventListener("click", (event) => {
   if (event.target === elements.photoDialog) elements.photoDialog.close();
