@@ -98,6 +98,7 @@ h1 .hero-title__exclamation { position: relative; z-index: 30; display: inline-b
 .letter-dialog, .final-dialog, .photo-dialog { position: relative; width: min(92vw, 680px); padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
 .letter-dialog { width: min(92vw, 680px); }
 .letter-dialog { scrollbar-width: none; overflow: visible; }
+.letter-dialog { max-width: calc(100vw - 1rem); }
 .letter-dialog::-webkit-scrollbar { display: none; }
 .letter-dialog::backdrop, .final-dialog::backdrop, .photo-dialog::backdrop { background: rgba(25, 15, 30, .72); backdrop-filter: blur(5px); }
 .photo-dialog { width: min(92vw, 900px); overflow: visible; }
@@ -115,6 +116,10 @@ h1 .hero-title__exclamation { position: relative; z-index: 30; display: inline-b
 .letter-face { position: absolute; z-index: 2; width: clamp(5rem, 11vw, 7.5rem); object-fit: contain; filter: drop-shadow(0 10px 10px rgba(20, 8, 20, .28)); animation: float-side 4.5s ease-in-out infinite; pointer-events: none; }
 .letter-face--chris { top: 36%; left: 0; }
 .letter-face--gavi { right: 0; bottom: 10%; animation-delay: -2.2s; }
+.letter-side-image { position: absolute; top: 34%; z-index: 2; display: block; width: 124px; height: 250px; border: 7px solid #fffdf9; border-radius: 14px; box-shadow: 0 16px 28px rgba(38, 20, 12, .28); object-fit: cover; pointer-events: none; }
+.letter-side-image--left { left: -110px; transform: rotate(-8deg); }
+.letter-side-image--right { right: -110px; transform: rotate(8deg); }
+.letter-side-image[hidden] { display: none; }
 .letter-postcard-button { position: absolute; top: 34%; right: -116px; z-index: 10; display: block; width: 175px; padding: 8px; border: 2px solid #d8c08c; border-radius: 14px 10px 16px 11px; background: #fffdf9; box-shadow: 0 16px 28px rgba(38, 20, 12, .28); cursor: pointer; pointer-events: auto; touch-action: manipulation; transform: rotate(8deg); }
 .letter-postcard-button[hidden] { display: none; }
 .letter-postcard { display: block; width: 100%; border-radius: 6px; object-fit: cover; }
@@ -159,15 +164,27 @@ h1 .hero-title__exclamation { position: relative; z-index: 30; display: inline-b
   .hero__intro { max-width: 21rem; margin-bottom: 1.5rem; font-size: .9rem; }
   .hero__hint { max-width: 13rem; margin: .2rem auto 0; line-height: 1.4; transform: translateY(-.4rem); }
   .letter-dialog { width: calc(100% - 1rem); }
+  .letter-dialog { max-height: calc(100svh - 1rem); }
   .photo-dialog { width: calc(100% - 2rem); }
-  .photo-dialog img { border-width: .4rem; }
+  .photo-dialog img { max-height: 80svh; border-width: .4rem; }
   .photo-dialog__close { top: -.9rem; right: -.4rem; }
-  .letter-dialog__paper { width: calc(100% - 3.5rem); min-height: 570px; padding: 44px 32px; }
+  .letter-dialog__paper { width: calc(100% - 2rem); max-height: calc(100svh - 1rem); min-height: 0; padding: 42px 22px 28px; overflow-y: auto; }
+  .letter-dialog__topline { font-size: .78rem; }
+  .letter-dialog h2 { margin: 1rem 0 .8rem; font-size: clamp(2rem, 11vw, 3rem); }
+  .letter-dialog__content { font-size: .92rem; line-height: 1.5; }
+  .letter-image { width: 100%; max-height: 30vh; object-fit: contain; margin: .8rem auto; }
   .letter-face { width: 2.5rem; }
   .letter-face--chris { top: 40%; left: .1rem; }
   .letter-face--gavi { right: .1rem; bottom: 10%; }
+  .letter-side-image { top: 42%; width: 44px; height: 120px; border-width: 3px; border-radius: 8px; }
+  .letter-side-image--left { left: -.1rem; }
+  .letter-side-image--right { right: -.1rem; }
   .letter-postcard-button { top: 12%; right: 1rem; z-index: 25; width: 112px; padding: 5px; border-radius: 10px 8px 11px 8px; transform: rotate(10deg); }
   .letter-dialog__close { top: 14px; right: 14px; }
+  .final-dialog { width: calc(100% - 1rem); }
+  .final-dialog__content { padding: 2.5rem 1.25rem; }
+  .final-dialog h2 { font-size: clamp(2.8rem, 13vw, 4.5rem); }
+  .final-dialog p:not(.eyebrow) { line-height: 1.55; }
   .journey { padding: 2rem .75rem 6rem; }
   .journey-map, .envelopes { min-height: 1180px; }
   .path-line { left: 8%; width: 84%; }

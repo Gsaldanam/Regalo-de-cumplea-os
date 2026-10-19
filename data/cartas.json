@@ -3,7 +3,7 @@
   "cartas": [
     {
       "id": 1,
-      "titulo": "Te acordas de nuestra primera discución? jasja",
+      "titulo": "Nuestra primera discución",
       "fecha": "El dia que hicimos clic",
       "tipo": "votacion",
       "texto": "Recuerdo estar muy nervioso, tanto que buscaba cualquier tema para poder habalarte 😅 y entre que hagarramos confianza en el escape room, y el taxi de camino al resturante surgio esta mitiquisima discusion, algo que forma parte de nuestra historia, ese dia te molestaste conmigo en el restaurante 🥲 y tmb nos encontramos a su doble en la granja villa jasjajs ",
@@ -14,16 +14,16 @@
       "titulo": "Te acordas de cuando te asustaste en la casita del terror? jajsja",
       "fecha": "La casita del terror",
       "tipo": "screamer",
-      "texto": "Me accuerdo (Muyyyyy claramente), que alguien no quiso subir ah no ser que fuera conmigo 😋, y yo obviamente accedi, recuerdo como te agarraste de mi brazo y no querias levantar la cabeza, y me preguntabas si daba miedo o no jasjajs, y yo accidentalmente te dije que no cuando una atraccion salio en tu cara jasjas (perdón, mi culpa), pero no podras negar que fue muy divertido y algo innolvidable 😌. (no encontre una imagend el interior de la casita del terror :c ). ",
+      "texto": "Me accuerdo (Muyyyyy claramente), que alguien no quiso subir ah no ser que fuera conmigo 😋, y yo obviamente accedi, recuerdo como te agarraste de mi brazo y no querias levantar la cabeza, y me preguntabas si daba miedo o no, y yo accidentalmente te dije que no cuando una atraccion salio en tu cara jasjas (perdón, mi culpa), pero no podras negar que fue muy divertido y algo innolvidable 😌. (no encontre una imagend el interior de la casita del terror :c ). ",
       "imagen": ""
     },
     {
       "id": 3,
-      "titulo": "Supuestamente fue casualidad",
-      "fecha": "Parada 03 · Parque Kennedy",
+      "titulo": "Los mejores jugadores de videojuegos",
+      "fecha": "Compartir tiempo juntos",
       "tipo": "normal",
-      "texto": "A veces la casualidad se esfuerza demasiado en parecer casualidad. Como aquella reunión supuestamente espontánea en el parque Kennedy, con sus coincidencias sospechosamente perfectas y esa conversación que se alargó mucho más de lo planeado. Me gusta pensar que el universo solo estaba haciendo un pequeño favor.",
-      "imagen": ""
+      "texto": "Horas y horas jugando al doors y nunca pudimos pasarlo completo :c, y en los juegos para dos parabamos muriendonos jasjajs, siempre era bueno pasar el rato jugando contigo.",
+      "imagen": "assets/carta-3-videojuegos.png"
     },
     {
       "id": 4,

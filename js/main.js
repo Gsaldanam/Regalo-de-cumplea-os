@@ -9,7 +9,7 @@ let toastTimer = null;
 const cartasDeRespaldo = [
   { id: 1, titulo: "La pregunta importante", fecha: "Parada 01 · La evidencia", tipo: "votacion", texto: "Hay debates que merecen una respuesta seria, científica y completamente imparcial.", imagen: "" },
   { id: 2, titulo: "Una visita a la casita del terror", fecha: "Parada 02 · El susto", tipo: "screamer", texto: "Recuerdo aquella casita del terror y la valiente estrategia de fingir que todo estaba bajo control. Spoiler: no lo estaba.", imagen: "" },
-  { id: 3, titulo: "Supuestamente fue casualidad", fecha: "Parada 03 · Parque Kennedy", tipo: "normal", texto: "A veces la casualidad se esfuerza demasiado en parecer casualidad. Como aquella reunión supuestamente espontánea en el parque Kennedy, con sus coincidencias sospechosamente perfectas y esa conversación que se alargó mucho más de lo planeado. Me gusta pensar que el universo solo estaba haciendo un pequeño favor.", imagen: "" },
+  { id: 3, titulo: "Supuestamente fue casualidad", fecha: "Parada 03 · Parque Kennedy", tipo: "normal", texto: "A veces la casualidad se esfuerza demasiado en parecer casualidad. Como aquella reunión supuestamente espontánea en el parque Kennedy, con sus coincidencias sospechosamente perfectas y esa conversación que se alargó mucho más de lo planeado. Me gusta pensar que el universo solo estaba haciendo un pequeño favor.", imagen: "assets/carta-3-videojuegos.png", imagenesLaterales: ["assets/carta-3-captura-izquierda.jpg", "assets/carta-3-captura-derecha.jpg"] },
   { id: 4, titulo: "Sal, sol y planes improvisados", fecha: "Parada 04 · La playa", tipo: "normal", texto: "[EDITA AQUÍ] Escribe el recuerdo de la playa: una escena, una frase que se quedó contigo y ese detalle que solo ustedes dos entienden. Puedes reemplazar todo este párrafo libremente.", imagen: "" },
   { id: 5, titulo: "Una película y mil comentarios", fecha: "Parada 05 · El cine", tipo: "normal", texto: "[EDITA AQUÍ] Cuenta el recuerdo del cine y de aquella conversación sobre el futuro. Añade aquí una anécdota, una predicción imposible o una frase que quieras conservar para siempre.", imagen: "" },
   { id: 6, titulo: "Lo que todavía nos queda", fecha: "Parada 06 · Un recuerdo más", tipo: "normal", texto: "[EDITA AQUÍ] Este espacio es para un recuerdo personal más. Puede ser pequeño: una caminata, una llamada, una risa inesperada o cualquier momento que merezca su propia página.", imagen: "" }
@@ -21,6 +21,7 @@ const elements = {
   journeyMap: document.querySelector("#journeyMap"),
   letterDialog: document.querySelector("#letterDialog"),
   letterFaces: document.querySelectorAll(".letter-face"),
+  letterSideImages: document.querySelectorAll(".letter-side-image"),
   photoDialog: document.querySelector("#photoDialog"),
   photoImage: document.querySelector("#photoImage"),
   letterTitle: document.querySelector("#letterTitle"),
@@ -56,7 +57,7 @@ function saveProgress() {
 
 async function loadLetters() {
   try {
-    const response = await fetch("data/cartas.json?v=3", { cache: "no-store" });
+    const response = await fetch("data/cartas.json?v=5", { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     cartas = data.cartas;
@@ -107,6 +108,7 @@ function openLetter(id) {
   elements.letterNumber.textContent = "";
   elements.letterContent.innerHTML = "";
   elements.letterFaces.forEach((face) => { face.hidden = carta.id !== 1; });
+  elements.letterSideImages.forEach((image) => { image.hidden = carta.id !== 3; });
   elements.letterPostcardButton.hidden = carta.id !== 2;
 
   if (carta.tipo === "votacion") renderVote(carta);
@@ -126,12 +128,16 @@ function renderNormalLetter(carta) {
   elements.letterContent.append(paragraph);
   typewrite(paragraph, carta.texto);
   if (carta.imagen) {
-    const image = document.createElement("img");
-    image.src = carta.imagen;
-    image.alt = `Recuerdo: ${carta.titulo}`;
-    image.className = "letter-image";
-    elements.letterContent.append(image);
+    elements.letterContent.append(createLetterImage(carta.imagen, `Recuerdo: ${carta.titulo}`));
   }
+}
+
+function createLetterImage(src, alt) {
+  const image = document.createElement("img");
+  image.src = src;
+  image.alt = alt;
+  image.className = "letter-image";
+  return image;
 }
 
 function typewrite(element, text) {
