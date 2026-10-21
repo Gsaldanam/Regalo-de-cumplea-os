@@ -27,29 +27,29 @@
     },
     {
       "id": 4,
-      "titulo": "Sal, sol y planes improvisados",
-      "fecha": "Parada 04 · La playa",
+      "titulo": "",
+      "fecha": "Parada 04 · Dias cotidianos",
       "tipo": "normal",
-      "_comentario": "EDITA AQUÍ: reemplaza texto, titulo, fecha e imagen por tu recuerdo de la playa.",
-      "texto": "[EDITA AQUÍ] Escribe el recuerdo de la playa: una escena, una frase que se quedó contigo y ese detalle que solo ustedes dos entienden. Puedes reemplazar todo este párrafo libremente.",
+      "_comentario": ".",
+      "texto": ".",
       "imagen": ""
     },
     {
       "id": 5,
-      "titulo": "Una película y mil comentarios",
-      "fecha": "Parada 05 · El cine",
+      "titulo": "",
+      "fecha": "Parada 05 · Tu recuerdo",
       "tipo": "normal",
-      "_comentario": "EDITA AQUÍ: reemplaza texto, titulo, fecha e imagen por el recuerdo del cine y la conversación sobre el futuro.",
-      "texto": "[EDITA AQUÍ] Cuenta el recuerdo del cine y de aquella conversación sobre el futuro. Añade aquí una anécdota, una predicción imposible o una frase que quieras conservar para siempre.",
+      "_comentario": "",
+      "texto": ".",
       "imagen": ""
     },
     {
       "id": 6,
-      "titulo": "Lo que todavía nos queda",
-      "fecha": "Parada 06 · Un recuerdo más",
+      "titulo": "",
+      "fecha": "Parada 06 · nose",
       "tipo": "normal",
-      "_comentario": "EDITA AQUÍ: reemplaza texto, titulo, fecha e imagen por un recuerdo personal más.",
-      "texto": "[EDITA AQUÍ] Este espacio es para un recuerdo personal más. Puede ser pequeño: una caminata, una llamada, una risa inesperada o cualquier momento que merezca su propia página.",
+      "_comentario": "",
+      "texto": ".",
       "imagen": ""
     }
   ]
