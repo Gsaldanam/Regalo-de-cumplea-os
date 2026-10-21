@@ -3,18 +3,18 @@
   "cartas": [
     {
       "id": 1,
-      "titulo": "Nuestra primera discución",
-      "fecha": "El dia que hicimos clic",
+      "titulo": "Nuestra primera discusión",
+      "fecha": "El día que hicimos clic",
       "tipo": "votacion",
-      "texto": "Recuerdo estar muy nervioso, tanto que buscaba cualquier tema para poder habalarte 😅 y entre que hagarramos confianza en el escape room, y el taxi de camino al resturante surgio esta mitiquisima discusion, algo que forma parte de nuestra historia, ese dia te molestaste conmigo en el restaurante 🥲 y tmb nos encontramos a su doble en la granja villa jasjajs ",
+      "texto": "Recuerdo estar muy nervioso, tanto que buscaba cualquier tema para poder hablarte 😅 y entre que agarramos confianza en el escape room, y el taxi de camino al restaurante surgió esta mitiquísima discusión, algo que forma parte de nuestra historia, ese día te molestaste conmigo en el restaurante 🥲 y también nos encontramos a su doble en la granja villa jasjajs ",
       "imagen": ""
     },
     {
       "id": 2,
-      "titulo": "Te acordas de cuando te asustaste en la casita del terror? jajsja",
+      "titulo": "¿Te acuerdas de cuando te asustaste en la casita del terror? jajsja",
       "fecha": "La casita del terror",
       "tipo": "screamer",
-      "texto": "Me accuerdo (Muyyyyy claramente), que alguien no quiso subir ah no ser que fuera conmigo 😋, y yo obviamente accedi, recuerdo como te agarraste de mi brazo y no querias levantar la cabeza, y me preguntabas si daba miedo o no, y yo accidentalmente te dije que no cuando una atraccion salio en tu cara jasjas (perdón, mi culpa), pero no podras negar que fue muy divertido y algo innolvidable 😌. (no encontre una imagend el interior de la casita del terror :c ). ",
+      "texto": "Me acuerdo (Muyyyyy claramente), que alguien no quiso subir a no ser que fuera conmigo 😋, y yo obviamente accedí, recuerdo cómo te agarraste de mi brazo y no querías levantar la cabeza, y me preguntabas si daba miedo o no, y yo accidentalmente te dije que no cuando una atracción salió en tu cara jasjas (perdón, mi culpa), pero no podrás negar que fue muy divertido y algo inolvidable 😌. (no encontré una imagen del interior de la casita del terror :c ). ",
       "imagen": ""
     },
     {
@@ -27,26 +27,26 @@
     },
     {
       "id": 4,
-      "titulo": "",
-      "fecha": "Parada 04 · Dias cotidianos",
+      "titulo": "Zy",
+      "fecha": "Días cotidianos",
       "tipo": "normal",
       "_comentario": ".",
-      "texto": ".",
+      "texto": "Sabes, hay cosas que valen más que gestos enormes, como pueden ser aquellos momentos que pasamos por alto. Personalmente recuerdo todos esos días hablando contigo como algo preciado, cuando iba y volvía de mis clases de barman y te mandaba fotos, o cuando me enseñaste los colores en francés o simplemente nos contábamos cómo nos fue como un 'Get ready with me' jaja, todos esos momentos forman parte de quien soy hoy en día y me acompañaron de aquí a 20 años aunque no sigamos hablando y eso está bien.",
       "imagen": ""
     },
     {
       "id": 5,
-      "titulo": "",
-      "fecha": "Parada 05 · Tu recuerdo",
+      "titulo": "culpable de todo",
+      "fecha": "Perdón",
       "tipo": "normal",
       "_comentario": "",
-      "texto": ".",
+      "texto": "Soy un imbécil, lo sé, y como te dije antes no pienso justificarme, y sé que mis acciones nos han distanciado, no sé muy bien qué decir para serte sincero, solo sé que genuinamente me gustas y aunque no es el momento más oportuno para decirlo, sabes, puedo jurarte que cada estupidez que cometí tiene una explicación y podría decírtelas, pero honestamente sentiría que me trato de justificar por algo que simplemente fueron errores que cometí por inmadurez, y ahora me toca cargar con ellos y aceptar que yo ya no te guste y quieras estar con alguien más y lo respeto, solo me gustaría que vieras lo muy arrepentido que estoy, pero no existen palabras que lo demuestren.",
       "imagen": ""
     },
     {
       "id": 6,
       "titulo": "",
-      "fecha": "Parada 06 · nose",
+      "fecha": "Parada 06 · no sé",
       "tipo": "normal",
       "_comentario": "",
       "texto": ".",
